@@ -42,16 +42,19 @@ def clickAllProvince(driver):
 def getTableRowData():
     cellList = driver.find_elements_by_xpath('/html/body/table/tbody/tr[4]/td/div/table/tbody/tr/td')
 
-    cnt = 1
-    for cellIdx in cellList:
+    cnt = 0
+    for cellIdx in range(6, len(cellList)):
         if(cnt == dataColumnCnt):
-            cnt = 1
+            cnt = 0
             file_str.write('\n')
 
-        file_str.write(cellIdx.text.encode('utf-8'))
+        if(cellList[cellIdx].text.encode('utf-8') is not None):
+            file_str.write(cellList[cellIdx].text.encode('utf-8'))
+        else:
+            file_str.write(' ')
         file_str.write(',')
         cnt+=1
-
+        
 
 def clickNextPage(driver, currentPageNum):
     pageItem = driver.find_element_by_class_name("paging")
